@@ -61,6 +61,8 @@ const findAll = async (req, res) => {
   }
 };
 
+//Usado ao clicar no botão edit na página principal, após a seleção de uma grade
+//para passar para receber daqui o id que identifica o grade atualizado
 const findOne = async (req, res) => {
   const { id } = req.params;
 
@@ -69,7 +71,16 @@ const findOne = async (req, res) => {
 
     if (!grade) res.status(404).send('Nenhuma informação encontrada!');
 
-    res.send(grade);
+    const { _id, name, subject, type, value } = grade;
+
+    res.send({
+      id: _id,
+      name,
+      subject,
+      type,
+      value,
+    });
+
     logger.info(`GET /grade - ${id}`);
   } catch (error) {
     res.status(500).send({ message: 'Erro ao buscar o Grade id: ' + id });
